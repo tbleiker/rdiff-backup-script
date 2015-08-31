@@ -1,0 +1,6 @@
+[Unit]
+Description=Example Backup Script
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c '/path/to/backup.sh -l /var/log/backup-example /path/to/tasks-example'

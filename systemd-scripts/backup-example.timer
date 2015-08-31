@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer for example backup script
+
+[Timer]
+OnCalendar=02:00
+Unit=backup-example.service
+
+[Install]
+WantedBy=multi-user.target

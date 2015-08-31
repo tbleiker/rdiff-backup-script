@@ -1,0 +1,8 @@
+# backup directory
+/path/to/dir          /path/to/dir/backup-dir
+
+# backup lvm
+VolumeGroupe/Volume   /path/to/lvm/backup-dir
+
+# backup zfs dataset
+pool/dataset          /path/to/zfs/backup-dir
