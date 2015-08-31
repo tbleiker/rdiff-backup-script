@@ -1,26 +1,22 @@
 #!/bin/bash
 #
-# Backup script using rdiff-backup.
-#
+# Bash backup script using rdiff-backup.
+# Copyright (c) 2015, Tobias Bleiker
+# 
+# Source on github: https://github.com/tbleiker/rdiff-backup-script
+# 
 
 
 ############################################################
 # Settings
 ############################################################
 
-# Options for duplicity backup.
-optDupliBack="--volsize=100 --no-encryption --full-if-older-than 1M"
-# Options for duplicity to remove old files.
-optDupliClean="remove-all-but-n-full 1 --force"
-
 # Options for rdiff backup.
-#optRdiffBackup="–-exclude-sockets --print-statistics"
 optRdiffBackup="--print-statistics"
 # Options for rdiff to remove old files.
 optRdiffClean="--remove-older-than 1M --force"
 
 # Where to put the logfile by default.
-#logfile=/var/log/duplibash
 logfile=/var/log/backup
 
 
@@ -82,14 +78,11 @@ function usage(){
   echo "  $0 [options] source destination type"
   echo ""
   echo "Options:"
-  #echo "  -c    check the given task(s)"
-  #echo "  -d    print additional information"
   echo "  -h    show this help"
   echo "  -l    specify log file"
   #echo "  -n    dry run"
   echo "  -v    verbose output"
   echo ""
-  #echo "Source code and more information can be found in the github repository."
 }
 
 
@@ -257,15 +250,11 @@ do
   ## Backup ##
   
   # Run the backup.
-  #duplicity $optDupliBack $pathSrc file://$pathDest 2> >(out warn) 1> >(out inf)
   rdiff-backup $optRdiffBackup $pathSrc $pathDest 2> >(out warn) 1> >(out inf)
-  #exitOnFailure $? "Duplicity backup failed."
   exitOnFailure $? "rdiff-backup backup failed."
   
   # Remove old backup files.
-  #duplicity $optDupliClean file://$pathDest 2> >(out warn) 1> >(out inf)
   rdiff-backup $optRdiffClean $pathDest 2> >(out warn) 1> >(out inf)
-  #exitOnFailure $? "Duplicity remove old files failed."
   exitOnFailure $? "rdiff-backup remove old files failed."
   
   
@@ -300,3 +289,4 @@ do
   echo "" | out
   
 done
+
